@@ -37,17 +37,17 @@ Follow these steps from initializing your folder to having the application seaml
 It's an industry best-practice to isolate your application's dependencies!
 ```bash
 # Create a virtual environment named "venv"
-python -m venv venv
+python -m venv translator_env
 ```
 
 ### 2. Activate the Environment
 Before interacting with your packages, activate the environment dynamically:
 ```bash
 # Windows (PowerShell)
-.\venv\Scripts\Activate.ps1
+.\translator_env\Scripts\Activate.ps1
 
 # Windows (Command Prompt)
-.\venv\Scripts\activate
+.\translator_env\Scripts\activate
 ```
 
 ### 3. Install the Dependencies
