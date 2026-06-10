@@ -1,0 +1,6 @@
+# Object Detection and Tracking - Requirements
+# CodeAlpha Internship - Task 3
+# Install all dependencies with: pip install -r requirements.txt
+
+ultralytics>=8.0.0
+opencv-python>=4.8.0
