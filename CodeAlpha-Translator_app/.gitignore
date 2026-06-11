@@ -1,0 +1,17 @@
+# Virtual environment
+translator_env/
+venv/
+env/
+.env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Temp audio files
+*.mp3
+
+# OS files
+.DS_Store
+Thumbs.db

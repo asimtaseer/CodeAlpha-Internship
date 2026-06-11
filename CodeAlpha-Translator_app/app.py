@@ -2,6 +2,7 @@ import streamlit as st
 from deep_translator import GoogleTranslator
 from gtts import gTTS
 import os
+import tempfile
 
 # --- Page Config ---
 st.set_page_config(
@@ -35,7 +36,7 @@ st.markdown("""
 st.markdown("<h1 class='main-title'>Language Translation Tool</h1>", unsafe_allow_html=True)
 st.markdown("### Fast & Simple Translator with Speech Support")
 
-# --- Language List (manual stable list) ---
+# --- Language List ---
 LANGUAGES = {
     "English": "en",
     "Urdu": "ur",
@@ -79,16 +80,21 @@ if st.button("Translate"):
             # --- TTS ---
             try:
                 tts = gTTS(text=translated, lang=dest)
-                file = "audio.mp3"
-                tts.save(file)
 
-                audio = open(file, "rb").read()
-                st.audio(audio, format="audio/mp3")
+                # Use a temp file so it works on Streamlit Cloud (read-only filesystem)
+                with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as tmp_file:
+                    tmp_path = tmp_file.name
 
-                os.remove(file)
+                tts.save(tmp_path)
 
-            except:
-                st.error("Text-to-Speech not available for this language")
+                with open(tmp_path, "rb") as audio_file:
+                    audio_bytes = audio_file.read()
+
+                st.audio(audio_bytes, format="audio/mp3")
+                os.remove(tmp_path)
+
+            except Exception as tts_error:
+                st.warning(f"Text-to-Speech not available for this language. ({tts_error})")
 
         except Exception as e:
-            st.error(f"Error: {e}")
+            st.error(f"Translation Error: {e}")
